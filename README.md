@@ -3,6 +3,20 @@
 
 State-Monad is a Python library that encapsulates stateful computations into a monadic structure.
 
+## Features
+
+* Pragmatic Monad: Implements the core concepts of a state monad in a way that is practical and relevant for a Python developpers. It focus on usability rather than enforcing strict adherence to monadic laws.
+* Object-Orgiented Design: State monad operations are built using Python classes, favoring an object-oriented approach that works with data and objects rather than relying on deeply nested functions.
+* Type hinting: Full support for type hinting ensures that types are correctly inferred by type checkers like [pyright](https://github.com/microsoft/pyright).
+
+## Installation
+
+You can install Do-notation using pip:
+
+```
+pip install statemonad
+```
+
 ## Overview
 
 The state object (also referred to as a context) is a Python object that represents the state in your computations.
@@ -75,8 +89,8 @@ print(f"{value=}")  # Output will be value=7
 print(f"{state=}")  # Output will be state=(4, 6)
 ```
 
-Note that defining the `CollectEvenNumbers` state monad as its proper class, enables us to nicely print the representation of the resulting Python object.
-Unfortunately, parts of the representation is hidden behind the lambda function given to the `flat_map` method.
+Defining the `CollectEvenNumbers` state monad as a class allows for a clean and readable representation of the resulting Python object.
+However, some details of this representation is obscured by the lambda function used with the `flat_map` method.
 
 
 ## Do-notation

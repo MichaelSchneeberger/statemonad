@@ -98,6 +98,8 @@ However, some details of this representation is obscured by the lambda function 
 Using the donotation library, the monadic sequence above can be rewritten with the do-notation as follows:
 
 ``` python
+from donotation import do
+
 @do()
 def example(init):
     x = yield from collect_even_numbers(init + 1)

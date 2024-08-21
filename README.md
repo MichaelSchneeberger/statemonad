@@ -11,7 +11,7 @@ State-Monad is a Python library that encapsulates stateful computations into a m
 
 ## Installation
 
-You can install Do-notation using pip:
+You can install State-Monad using pip:
 
 ```
 pip install statemonad

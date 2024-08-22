@@ -8,7 +8,7 @@ from_ = _from_
 get = _get
 put = from_(None).put
 
-init_state_monad = _init_state_monad
+from_node = _init_state_monad
 
 
 def zip[State, U](

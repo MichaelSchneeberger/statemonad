@@ -37,7 +37,6 @@ from dataclassabc import dataclassabc
 import statemonad
 from statemonad.abc import StateMonadNode
 from statemonad.typing import StateMonad
-from statemonad import init_state_monad
 
 
 type State = tuple[int, ...]
@@ -60,7 +59,7 @@ def collect_even_numbers(num: int):
                 n_state = state + (self.num,)
                 return n_state, self.num
 
-        return init_state_monad(CollectEvenNumbers(num=num))
+        return statemonad.from_node(CollectEvenNumbers(num=num))
 
     else:
         return statemonad.from_[State](num)

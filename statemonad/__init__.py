@@ -1,18 +1,18 @@
 from collections.abc import Iterable
 
 from statemonad.statemonad.statemonad import StateMonad as _StateMonad
-from statemonad.statemonad.from_ import from_ as _from_, get as _get
+from statemonad.statemonad.from_ import from_ as _from_, get as _get, put as _put
 from statemonad.statemonad.init import init_state_monad as _init_state_monad
 
 from_ = _from_
 get = _get
-put = from_(None).put
+put = _put
 
 from_node = _init_state_monad
 
 
 def zip[State, U](
-    others: Iterable[_StateMonad[State, U]],
+    monads: Iterable[_StateMonad[State, U]],
 ):
     """
     Combine multiple state monads into a single monad that evaluates each
@@ -33,12 +33,12 @@ def zip[State, U](
     ```
     """
 
-    others = iter(others)
+    monads_iterator = iter(monads)
     try:
-        current = next(others).map(lambda v: (v,))
+        current = next(monads_iterator).map(lambda v: (v,))
     except StopIteration:
         return from_[State](tuple[U]())
     else:
-        for other in others:
+        for other in monads_iterator:
             current = current.zip(other).map(lambda v: v[0] + (v[1],))
         return current

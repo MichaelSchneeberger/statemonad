@@ -20,4 +20,9 @@ class get[State]:
     """
         
     def __new__(_) -> StateMonad[State, State]:
-        return from_(None).get()
+        return from_[State](None).get()
+
+
+class put[State]:        
+    def __new__(_, state: State) -> StateMonad[State, None]:
+        return from_[State](None).put(state=state)

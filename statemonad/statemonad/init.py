@@ -20,6 +20,5 @@ class StateMonadImpl[State, U](StateMonad[State, U]):
         return replace(self, **changes)
 
 
-init_state_monad = StateMonadImpl
-# def init_state_monad[State: StateCache, U](child: StateApplicative[State, U]):
-#     return StateMonadImpl(child=child)
+def init_state_monad[State, U](child: StateApplicative[State, U]):
+    return StateMonadImpl(child=child)

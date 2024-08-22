@@ -5,8 +5,8 @@ from statemonad.statemonad.init import init_state_monad
 
 class from_[State]:
     """
-    This function creates a constant state monad. It sets the return value to `value` 
-    while leaving the state unchanged.
+    This function (implemented as function to enable better type hinting) creates a constant state monad.
+    It sets the return value to `value` while leaving the state unchanged.
     """
     
     def __new__[U](_, value: U) -> StateMonad[State, U]:
@@ -14,5 +14,10 @@ class from_[State]:
 
 
 class get[State]:
+    """
+    This function (implemented as function to enable better type hinting) returns the state while leaving
+    the state unchanged.
+    """
+        
     def __new__(_) -> StateMonad[State, State]:
         return from_(None).get()

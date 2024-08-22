@@ -1,13 +1,13 @@
 from typing import Any, Callable
 from dataclassabc import dataclassabc
 
+from statemonad.stateapplicative import StateApplicative
 from statemonad.statemonadtree.operations.flatmapmixin import FlatMapMixin
 from statemonad.statemonadtree.operations.frommixin import FromMixin
 from statemonad.statemonadtree.operations.getmixin import GetMixin
 from statemonad.statemonadtree.operations.mapmixin import MapMixin
 from statemonad.statemonadtree.operations.putmixin import PutMixin
 from statemonad.statemonadtree.operations.zipmixin import ZipMixin
-from statemonad.stateapplicative import StateApplicative
 
 
 @dataclassabc(frozen=True)

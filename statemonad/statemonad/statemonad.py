@@ -18,9 +18,8 @@ class StateMonad[State, U](
     SingleChildStateMonadNode[State, U, U]
 ):
     """
-    This mixin class encapsulates stateful computations in a monadic context, allowing for state to be passed
-    through a series of computations without explicitly threading it through function calls. This pattern is similar
-    to the state monad found in functional programming languages.
+    The StateMonad class implements a dot notation syntax, providing convenient methods to define and 
+    chain monadic operations.
     """
 
     @override

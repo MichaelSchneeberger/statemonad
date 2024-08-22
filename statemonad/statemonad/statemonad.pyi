@@ -2,13 +2,16 @@ from typing import Callable, override, Generator
 
 from statemonad.stateapplicative import StateApplicative
 
-
 class StateMonad[State, U](StateApplicative[State, U]):
+    # used for the donotation.do notation
     def __iter__(self) -> Generator[None, None, U]: ...
     @override
     def apply(self, state: State) -> tuple[State, U]: ...
-    def cache(self) -> StateMonad[State, U]: ...
     def copy(self, /, **changes) -> StateMonad[State, U]: ...
+
+    # operations
+    ############
+
     def flat_map[V](
         self, func: Callable[[U], StateApplicative[State, V]]
     ) -> StateMonad[State, V]: ...

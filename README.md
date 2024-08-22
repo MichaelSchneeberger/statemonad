@@ -6,8 +6,8 @@ State-Monad is a Python library that encapsulates stateful computations into a m
 ## Features
 
 * Pragmatic Monad: Implements the core concepts of a state monad in a way that is practical and relevant for a Python developpers. It focus on usability rather than enforcing strict adherence to monadic laws.
-* Object-Orgiented Design: State monad operations are built using Python classes, favoring an object-oriented approach that works with data and objects rather than relying on deeply nested functions.
-* Type hinting: Full support for type hinting ensures that types are correctly inferred by type checkers like [pyright](https://github.com/microsoft/pyright).
+* Object-Orgiented Design: State monad operations are built using Python classes, favoring an object-oriented approach that works with objects rather than relying on deeply nested functions.
+* Type hinting: The implemented type hinting ensures that types are correctly inferred by type checkers like [pyright](https://github.com/microsoft/pyright).
 
 ## Installation
 
@@ -17,13 +17,13 @@ You can install State-Monad using pip:
 pip install statemonad
 ```
 
-## Overview
+## Usage
 
-The state object (also referred to as a context) is a Python object that represents the state in your computations.
+The state object is a Python object that represents the state in your computations.
 Each operation may modify the state and return a new values based on the updated state.
 The result is a chain of operations where the state flows through each step, with the State-Monad keeping the flow clean and organized.
 
-## Example
+### Example
 
 <!-- The following example illustrates the use of the State-Monad library. -->
 In this example, we define the `collect_even_numbers` operations, which returns a `CollectEvenNumbers` state monad if the given number is even, or a default state monad encapsulating the value otherwise.
@@ -36,6 +36,7 @@ from dataclassabc import dataclassabc
 
 import statemonad
 from statemonad.abc import StateMonadNode
+from statemonad.typing import StateMonad
 from statemonad import init_state_monad
 
 
@@ -45,10 +46,10 @@ state = tuple()
 
 def collect_even_numbers(num: int):
     """
-    This function encapsulates the given number within a state monad 
+    This function encapsulates the given number within a state monad
     and saves it to the state if the number is even.
     """
-    
+
     if num % 2 == 0:
 
         @dataclassabc(frozen=True)
@@ -64,6 +65,7 @@ def collect_even_numbers(num: int):
     else:
         return statemonad.from_[State](num)
 
+
 # do some monadic operations using `flat_map`
 def example(init):
     return collect_even_numbers(init + 1).flat_map(
@@ -74,7 +76,12 @@ def example(init):
         )
     )
 
-monad = example(3)
+
+monad: StateMonad[State, int] = example(3)
+
+# Output will be
+# StateMonad(flat_map(CollectEvenNumbers(num=4), <lambda>))
+print(monad)
 
 # Output will be
 # monad=StateMonadImpl(

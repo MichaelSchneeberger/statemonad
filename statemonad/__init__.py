@@ -1,5 +1,4 @@
 from collections.abc import Iterable
-from typing import Any, Callable, Generator
 
 from statemonad.statemonad.statemonad import StateMonad as _StateMonad
 from statemonad.statemonad.from_ import from_ as _from_, get as _get
@@ -12,44 +11,33 @@ put = from_(None).put
 init_state_monad = _init_state_monad
 
 
-def do():
-    def decorator[V](fn: Callable[..., Generator[Any, None, V]]):
-        def wrapper(*args, **kwargs) -> V:
-            gen = fn(*args, **kwargs)
+def zip[State, U](
+    others: Iterable[_StateMonad[State, U]],
+):
+    """
+    Combine multiple state monads into a single monad that evaluates each
+    one and returns their result as a tuple.
 
-            def send_and_yield(value):
-                try:
-                    next_val = gen.send(value)
-                except StopIteration as e:
-                    result = e.value
-                else:
-                    result = next_val.flat_map(send_and_yield)
-                return result
+    This function takes an iterable of state monads and produces a new state monad
+    that, when applied to a state, runs each of the original monads in sequence
+    with the same initial state. The final state is derived from the sequence, and
+    the result is a tuple of all the values produced by the monads.
 
-            return send_and_yield(None)
-        return wrapper
-    return decorator
+    Example:
+    ``` python
+    m1, m2, m3 = from_(1), from_(2), from_(3)
 
+    state, value = zip((m1, m2, m3)).apply(state)
 
-# def for_each[U](elems: Iterable[U]):
-    
-#     def decorator[State: _StateCache, V](func: Callable[[U], Generator[None, None, _StateMonad[State, V]]]):
-#         do_func = do()(func)
+    print(value)  # Output will be (1, 2, 3)
+    ```
+    """
 
-#         def dec_func():
-#             return zip(do_func(elem) for elem in elems)
-
-#         return wraps(func)(dec_func)  # type: ignore
-    
-#     return decorator
-
-
-def zip[State, U](others: Iterable[_StateMonad[State, U]]) -> _StateMonad[State, tuple[U, ...]]:
     others = iter(others)
     try:
         current = next(others).map(lambda v: (v,))
     except StopIteration:
-        return from_(tuple())
+        return from_[State](tuple[U]())
     else:
         for other in others:
             current = current.zip(other).map(lambda v: v[0] + (v[1],))

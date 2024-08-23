@@ -12,6 +12,7 @@ from statemonad.statemonadtree.init import (
     init_zip,
 )
 from statemonad.stateapplicative import StateApplicative
+from statemonad.utils.getstacklines import get_frame_summary
 
 
 class StateMonad[State, U](
@@ -35,13 +36,13 @@ class StateMonad[State, U](
     def flat_map[V](
         self, func: Callable[[U], StateApplicative[State, V]]
     ) -> StateMonad:
-        return self.copy(child=init_flat_map(child=self.child, func=func))
+        return self.copy(child=init_flat_map(child=self.child, func=func, stack=get_frame_summary()))
 
     def get(self) -> StateMonad:
         return self.copy(child=init_get(child=self.child))
 
     def map[V](self, func: Callable[[U], V]) -> StateMonad:
-        return self.copy(child=init_map(child=self.child, func=func))
+        return self.copy(child=init_map(child=self.child, func=func, stack=get_frame_summary()))
 
     def put(self, state: State) -> StateMonad:
         return self.copy(child=init_put(child=self.child, state=state))

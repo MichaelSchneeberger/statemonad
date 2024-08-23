@@ -8,12 +8,14 @@ from statemonad.statemonadtree.operations.getmixin import GetMixin
 from statemonad.statemonadtree.operations.mapmixin import MapMixin
 from statemonad.statemonadtree.operations.putmixin import PutMixin
 from statemonad.statemonadtree.operations.zipmixin import ZipMixin
+from statemonad.utils.getstacklines import FrameSummary
 
 
-@dataclassabc(frozen=True)
+@dataclassabc(frozen=True, repr=False)
 class FlatMapImpl[State, U, ChildU](FlatMapMixin[State, U, ChildU]):
     child: StateApplicative[State, ChildU]
     func: Callable[[ChildU], StateApplicative[State, U]]
+    stack: tuple[FrameSummary, ...]
 
 
 init_flat_map = FlatMapImpl
@@ -35,10 +37,11 @@ class GetImpl[State](GetMixin[State]):
 init_get = GetImpl
 
 
-@dataclassabc(frozen=True)
+@dataclassabc(frozen=True, repr=False)
 class MapImpl[State, U, ChildU](MapMixin[State, U, ChildU]):
     child: StateApplicative[State, ChildU]
     func: Callable[[ChildU], U]
+    stack: tuple[FrameSummary, ...]
 
 
 init_map = MapImpl

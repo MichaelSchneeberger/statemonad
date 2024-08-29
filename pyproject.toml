@@ -1,6 +1,6 @@
 [project]
 name = "statemonad"
-version = "0.0.1"
+version = "0.0.2"
 description = 'A library that encapsulates stateful computations into a monadic structure.'
 authors = [
   {name="Michael Schneeberger", email="michael.schneeb@hotmail.com"},

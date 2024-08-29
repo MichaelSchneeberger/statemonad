@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
 
-from statemonad.stateapplicative import StateApplicative
 
-
-class StateMonadNode[State, U](StateApplicative[State, U], ABC):
+class StateMonadNode[State, U](ABC):
     """
     Inherit from this class to create a custom state monad.
 
@@ -16,9 +14,25 @@ class StateMonadNode[State, U](StateApplicative[State, U], ABC):
     operations and producing the final result.
 
     Usage of this class allows for composing complex stateful computations in a functional way.
+
+    This mixin class provides an `apply` method for stateful computations. The `apply` method takes an initial state as input
+    and returns a tuple containing an updated state and a result.
     """
-    
-    pass
+
+    @abstractmethod
+    def apply(self, state: State) -> tuple[State, U]:
+        """
+        Apply the stateful computation.
+
+        Parameters:
+            state: The initial state before the computation.
+
+        Returns:
+            A tuple (new_state, result):
+                new_state: The state after the computation.
+                result: The result of the computation.
+        """
+
 
 
 class SingleChildStateMonadNode[State, U, ChildU](StateMonadNode[State, U]):

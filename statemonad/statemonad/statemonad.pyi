@@ -1,8 +1,8 @@
 from typing import Callable, override, Generator
 
-from statemonad.stateapplicative import StateApplicative
+from statemonad.statemonadtree.nodes import StateMonadNode
 
-class StateMonad[State, U](StateApplicative[State, U]):
+class StateMonad[State, U](StateMonadNode[State, U]):
     # used for the donotation.do notation
     def __iter__(self) -> Generator[None, None, U]: ...
     @override
@@ -13,7 +13,7 @@ class StateMonad[State, U](StateApplicative[State, U]):
     ############
 
     def flat_map[V](
-        self, func: Callable[[U], StateApplicative[State, V]]
+        self, func: Callable[[U], StateMonad[State, V]]
     ) -> StateMonad[State, V]: ...
     def get(self) -> StateMonad[State, State]: ...
     def map[V](self, func: Callable[[U], V]) -> StateMonad[State, V]: ...

@@ -5,12 +5,12 @@ from typing import override
 from dataclassabc import dataclassabc
 
 from statemonad.statemonad.statemonad import StateMonad
-from statemonad.stateapplicative import StateApplicative
+from statemonad.statemonadtree.nodes import StateMonadNode
 
 
 @dataclassabc(frozen=True)
 class StateMonadImpl[State, U](StateMonad[State, U]):
-    child: StateApplicative[State, U]
+    child: StateMonadNode[State, U]
 
     def __str__(self) -> str:
         return f"StateMonad({self.child})"
@@ -20,5 +20,5 @@ class StateMonadImpl[State, U](StateMonad[State, U]):
         return replace(self, **changes)
 
 
-def init_state_monad[State, U](child: StateApplicative[State, U]):
+def init_state_monad[State, U](child: StateMonadNode[State, U]):
     return StateMonadImpl(child=child)

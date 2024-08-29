@@ -1,7 +1,7 @@
 from typing import Any, Callable
 from dataclassabc import dataclassabc
 
-from statemonad.stateapplicative import StateApplicative
+from statemonad.statemonadtree.nodes import StateMonadNode
 from statemonad.statemonadtree.operations.flatmapmixin import FlatMapMixin
 from statemonad.statemonadtree.operations.frommixin import FromMixin
 from statemonad.statemonadtree.operations.getmixin import GetMixin
@@ -13,8 +13,8 @@ from statemonad.utils.getstacklines import FrameSummary
 
 @dataclassabc(frozen=True, repr=False)
 class FlatMapImpl[State, U, ChildU](FlatMapMixin[State, U, ChildU]):
-    child: StateApplicative[State, ChildU]
-    func: Callable[[ChildU], StateApplicative[State, U]]
+    child: StateMonadNode[State, ChildU]
+    func: Callable[[ChildU], StateMonadNode[State, U]]
     stack: tuple[FrameSummary, ...]
 
 
@@ -31,7 +31,7 @@ init_from = FromImpl
 
 @dataclassabc(frozen=True)
 class GetImpl[State](GetMixin[State]):
-    child: StateApplicative[State, Any]
+    child: StateMonadNode[State, Any]
 
 
 init_get = GetImpl
@@ -39,7 +39,7 @@ init_get = GetImpl
 
 @dataclassabc(frozen=True, repr=False)
 class MapImpl[State, U, ChildU](MapMixin[State, U, ChildU]):
-    child: StateApplicative[State, ChildU]
+    child: StateMonadNode[State, ChildU]
     func: Callable[[ChildU], U]
     stack: tuple[FrameSummary, ...]
 
@@ -49,7 +49,7 @@ init_map = MapImpl
 
 @dataclassabc(frozen=True)
 class PutImpl[State, U](PutMixin[State, U]):
-    child: StateApplicative[State, U]
+    child: StateMonadNode[State, U]
     state: State
 
 
@@ -58,8 +58,8 @@ init_put = PutImpl
 
 @dataclassabc(frozen=True)
 class ZipImpl[State, L, R](ZipMixin[State, L, R]):
-    left: StateApplicative[State, L]
-    right: StateApplicative[State, R]
+    left: StateMonadNode[State, L]
+    right: StateMonadNode[State, R]
 
 
 init_zip = ZipImpl

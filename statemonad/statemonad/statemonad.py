@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import abstractmethod
 from typing import Callable, override
 
-from statemonad.statemonadtree.nodes import SingleChildStateMonadNode
+from statemonad.statemonadtree.nodes import SingleChildStateMonadNode, StateMonadNode
 from statemonad.statemonadtree.init import (
     init_flat_map,
     init_get,
@@ -11,7 +11,6 @@ from statemonad.statemonadtree.init import (
     init_put,
     init_zip,
 )
-from statemonad.stateapplicative import StateApplicative
 from statemonad.utils.getstacklines import get_frame_summary
 
 
@@ -34,7 +33,7 @@ class StateMonad[State, U](
     ############
 
     def flat_map[V](
-        self, func: Callable[[U], StateApplicative[State, V]]
+        self, func: Callable[[U], StateMonadNode[State, V]]
     ) -> StateMonad:
         return self.copy(child=init_flat_map(child=self.child, func=func, stack=get_frame_summary()))
 

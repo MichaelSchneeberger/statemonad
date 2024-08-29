@@ -46,7 +46,7 @@ def to_operator_traceback(
 def to_operator_exception_message(stack: tuple[FrameSummary, ...]):
     message = (
         'State Monad operator exception caught. '
-        'See the traceback below for details on the operator call.'
+        'See the traceback below for details on the operator call stack.'
         '\n'
     )
     traceback = to_operator_traceback(stack=stack)

@@ -3,6 +3,9 @@ from statemonad.statemonadtree.nodes import (
     SingleChildStateMonadNode as _SingleChildStateMonadNode,
     TwoChildrenStateMonadNode as _TwoChildrenStateMonadNode,
 )
+from statemonad.utils.getstacklines import FrameSummaryMixin as _FrameSummaryMixin
+
+FrameSummaryMixin = _FrameSummaryMixin
 
 StateMonadNode = _StateMonadNode
 SingleChildStateMonadNode = _SingleChildStateMonadNode

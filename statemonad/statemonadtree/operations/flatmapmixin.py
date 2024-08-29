@@ -2,8 +2,7 @@ from abc import abstractmethod
 from typing import Callable
 
 from statemonad.exceptions import StateMonadOperatorException
-from statemonad.statemonadtree.nodes import SingleChildStateMonadNode
-from statemonad.stateapplicative import StateApplicative
+from statemonad.statemonadtree.nodes import SingleChildStateMonadNode, StateMonadNode
 from statemonad.utils.getstacklines import FrameSummaryMixin, to_operator_exception_message
 
 class FlatMapMixin[State, U, ChildU](FrameSummaryMixin, SingleChildStateMonadNode[State, U, ChildU]):
@@ -12,7 +11,7 @@ class FlatMapMixin[State, U, ChildU](FrameSummaryMixin, SingleChildStateMonadNod
 
     @property
     @abstractmethod
-    def func(self) -> Callable[[ChildU], StateApplicative[State, U]]: ...
+    def func(self) -> Callable[[ChildU], StateMonadNode[State, U]]: ...
 
     def apply(self, state: State) -> tuple[State, U]:
         state, value = self.child.apply(state)

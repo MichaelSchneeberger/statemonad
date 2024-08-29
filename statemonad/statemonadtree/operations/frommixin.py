@@ -1,8 +1,9 @@
 from abc import abstractmethod
-from statemonad.stateapplicative import StateApplicative
+
+from statemonad.statemonadtree.nodes import StateMonadNode
 
 
-class FromMixin[State, U](StateApplicative[State, U]):
+class FromMixin[State, U](StateMonadNode[State, U]):
     def __str__(self) -> str:
         return f'from({self.value})'
 

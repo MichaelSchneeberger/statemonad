@@ -57,3 +57,14 @@ class TwoChildrenStateMonadNode[State, U, L, R](StateMonadNode[State, U]):
     @property
     @abstractmethod
     def right(self) -> StateMonadNode[State, R]: ...
+
+
+class MultiChildrenStateMonadNode[State, U, ChildU](StateMonadNode[State, U]):
+    """
+    Represents a state monad node with two children.
+    """
+
+    @property
+    @abstractmethod
+    def children(self) -> tuple[StateMonadNode[State, ChildU], ...]: ...
+

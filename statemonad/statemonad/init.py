@@ -8,7 +8,7 @@ from statemonad.statemonad.statemonad import StateMonad
 from statemonad.statemonadtree.nodes import StateMonadNode
 
 
-@dataclassabc(frozen=True)
+@dataclassabc(frozen=True, slots=True)
 class StateMonadImpl[State, U](StateMonad[State, U]):
     child: StateMonadNode[State, U]
 

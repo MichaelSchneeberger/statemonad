@@ -3,7 +3,7 @@ from typing import Callable
 
 from statemonad.exceptions import StateMonadOperatorException
 from statemonad.statemonadtree.nodes import SingleChildStateMonadNode, StateMonadNode
-from statemonad.utils.getstacklines import FrameSummaryMixin, to_operator_exception_message
+from statemonad.utils.getstacklines import FrameSummaryMixin
 
 class FlatMapMixin[State, U, ChildU](FrameSummaryMixin, SingleChildStateMonadNode[State, U, ChildU]):
     def __str__(self) -> str:
@@ -23,8 +23,6 @@ class FlatMapMixin[State, U, ChildU](FrameSummaryMixin, SingleChildStateMonadNod
             raise
 
         except Exception:
-            raise StateMonadOperatorException(
-                to_operator_exception_message(stack=self.stack)
-            )
+            raise StateMonadOperatorException(self.to_operator_exception_message())
 
         return result

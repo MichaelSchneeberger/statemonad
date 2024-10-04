@@ -46,5 +46,5 @@ class StateMonad[State, U](
     def put(self, state: State) -> StateMonad:
         return self.copy(child=init_put(child=self.child, state=state))
 
-    def zip(self, other: StateMonad) -> StateMonad:
-        return self.copy(child=init_zip(left=self.child, right=other.child))
+    def zip(self, others: tuple[StateMonad[State, U], ...]) -> StateMonad[State, tuple[U, ...]]:
+        return self.copy(child=init_zip(children=(self,) + others))

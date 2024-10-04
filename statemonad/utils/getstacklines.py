@@ -16,7 +16,7 @@ class FrameSummary:
 def get_frame_summary(index: int = 3) -> tuple[FrameSummary, ...]:
     def gen_stack_lines():
         for obj in traceback.extract_stack()[:-index]:
-            if '<frozen importlib._bootstrap' not in obj.filename:
+            if '<frozen ' not in obj.filename:
                 yield FrameSummary(
                     filename=obj.filename,
                     lineno=obj.lineno,
@@ -64,3 +64,6 @@ class FrameSummaryMixin:
         fields_str = ','.join(f'{field.name}={repr(getattr(self, field.name))}' for field in fields(self) if field.name != 'stack') # type: ignore
 
         return f"{self.__class__.__name__}({fields_str})"
+    
+    def to_operator_exception_message(self):
+        return to_operator_exception_message(self.stack)

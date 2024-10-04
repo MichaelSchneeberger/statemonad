@@ -21,7 +21,7 @@ class FlatMapImpl[State, U, ChildU](FlatMapMixin[State, U, ChildU]):
 init_flat_map = FlatMapImpl
 
 
-@dataclassabc(frozen=True)
+@dataclassabc(frozen=True, slots=True)
 class FromImpl[State, U](FromMixin[State, U]):
     value: U
 
@@ -29,7 +29,7 @@ class FromImpl[State, U](FromMixin[State, U]):
 init_from = FromImpl
 
 
-@dataclassabc(frozen=True)
+@dataclassabc(frozen=True, slots=True)
 class GetImpl[State](GetMixin[State]):
     child: StateMonadNode[State, Any]
 
@@ -47,7 +47,7 @@ class MapImpl[State, U, ChildU](MapMixin[State, U, ChildU]):
 init_map = MapImpl
 
 
-@dataclassabc(frozen=True)
+@dataclassabc(frozen=True, slots=True)
 class PutImpl[State, U](PutMixin[State, U]):
     child: StateMonadNode[State, U]
     state: State
@@ -56,10 +56,9 @@ class PutImpl[State, U](PutMixin[State, U]):
 init_put = PutImpl
 
 
-@dataclassabc(frozen=True)
-class ZipImpl[State, L, R](ZipMixin[State, L, R]):
-    left: StateMonadNode[State, L]
-    right: StateMonadNode[State, R]
+@dataclassabc(frozen=True, slots=True)
+class ZipImpl[State, U](ZipMixin[State, U]):
+    children: tuple[StateMonadNode[State, U], ...]
 
 
 init_zip = ZipImpl

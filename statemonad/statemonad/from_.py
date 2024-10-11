@@ -68,7 +68,7 @@ def zip[State, U](
         case 0:
             return from_[State](tuple[U]())
         case 1:
-            return monads_tuple[0]
+            return monads_tuple[0].map(lambda v: (v,))
         case _:
             return monads_tuple[0].zip(monads_tuple[1:])
 

@@ -1,7 +1,7 @@
 
-# State-Monad
+# State Monad
 
-State-Monad is a Python library that encapsulates stateful computations - computations that require an explicit state object to execute - within a monadic structure.
+**State Monad** is a Python library that encapsulates stateful operations - computations that require an explicit state object to execute - within a monadic structure.
 
 ## Features
 
@@ -11,7 +11,7 @@ State-Monad is a Python library that encapsulates stateful computations - comput
 
 ## Installation
 
-You can install State-Monad using pip:
+You can install **State Monad** using pip:
 
 ```
 pip install statemonad
@@ -20,18 +20,20 @@ pip install statemonad
 ## Usage
 
 The state object is a Python object that represents the state in your computations.
-Each operation may modify the state and return a new values based on the updated state.
-The result is a chain of operations where the state flows through each step, with the State-Monad keeping the flow clean and organized.
+Each operation may modify the state and return a new value based on the updated state.
+The result is a chain of operations where the state flows through each step, with the **State Monad** keeping the flow clean and organized.
 
 ### Example
 
-<!-- The following example illustrates the use of the State-Monad library. -->
-In this example, we define the `collect_even_numbers` operations, which returns a `CollectEvenNumbers` state monad if the given number is even, or a default state monad encapsulating the value otherwise.
+In this example, we define the function `collect_even_numbers`, a stateful operation that adds the provided number `num` to the state if it is even.
+
+<!-- In this example, we define the function `collect_even_numbers` - representing the stateful operation -, which returns a custome state monad `CollectEvenNumbers` that adds the number to the state if the given number is even, or a default state monad encapsulating the value otherwise.
 The `example` function performs monadic operations using the `collect_even_numbers` operator, resulting in a state monad.
-Finally, the constructed state monad is applied with an empty tuple as the initial state.
+Finally, the constructed state monad is applied with an empty tuple as the initial state. -->
 
 
 ``` python
+from typing import override
 from dataclassabc import dataclassabc
 
 import statemonad
@@ -44,17 +46,17 @@ state = tuple()
 
 
 def collect_even_numbers(num: int):
-    """
-    This function encapsulates the given number within a state monad
-    and saves it to the state if the number is even.
-    """
-
     if num % 2 == 0:
 
         @dataclassabc(frozen=True, slots=True)
         class CollectEvenNumbers(StateMonadNode[State, int]):
+            """
+            A custom state monad implemented as a dataclass.
+            The `apply` methods adds `num` to the state.
+            """
             num: int
 
+            @override
             def apply(self, state: State):
                 n_state = state + (self.num,)
                 return n_state, self.num
@@ -65,7 +67,7 @@ def collect_even_numbers(num: int):
         return statemonad.from_[State](num)
 
 
-# do some monadic operations using `flat_map`
+# chain monadic operations using `flat_map`
 def example(init):
     return collect_even_numbers(init + 1).flat_map(
         lambda x: collect_even_numbers(x + 1).flat_map(
@@ -95,24 +97,12 @@ print(f"{value=}")  # Output will be value=7
 print(f"{state=}")  # Output will be state=(4, 6)
 ```
 
-Defining the `CollectEvenNumbers` state monad as a class allows for a clean and readable representation of the resulting Python object.
+Defining the state monad `CollectEvenNumbers` as a class allows for a clean and readable representation of the resulting state monad object `monad`.
 However, some details of this representation is obscured by the lambda function used with the `flat_map` method.
 
 
-<!-- ## Do-notation
+<!-- ## Enhanced Traceback -->
 
-Using the [do-notation](https://github.com/MichaelSchneeberger/do-notation) library, the monadic sequence above can be rewritten with the do-notation as follows:
-
-``` python
-from donotation import do
-
-@do()
-def example(init):
-    x = yield from collect_even_numbers(init + 1)
-    y = yield from collect_even_numbers(x + 1)
-    z = yield from collect_even_numbers(y + 1)
-    return collect_even_numbers(z + 1)
-``` -->
 
 ## References
 

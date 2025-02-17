@@ -1,3 +1,4 @@
+from typing import override
 from dataclassabc import dataclassabc
 
 import statemonad
@@ -10,17 +11,17 @@ state = tuple()
 
 
 def collect_even_numbers(num: int):
-    """
-    This function encapsulates the given number within a state monad
-    and saves it to the state if the number is even.
-    """
-
     if num % 2 == 0:
 
-        @dataclassabc(frozen=True)
+        @dataclassabc(frozen=True, slots=True)
         class CollectEvenNumbers(StateMonadNode[State, int]):
+            """
+            A custom state monad implemented as a dataclass.
+            The `apply` methods adds `num` to the state.
+            """
             num: int
 
+            @override
             def apply(self, state: State):
                 n_state = state + (self.num,)
                 return n_state, self.num
@@ -31,7 +32,7 @@ def collect_even_numbers(num: int):
         return statemonad.from_[State](num)
 
 
-# do some monadic operations using `flat_map`
+# chain monadic operations using `flat_map`
 def example(init):
     return collect_even_numbers(init + 1).flat_map(
         lambda x: collect_even_numbers(x + 1).flat_map(

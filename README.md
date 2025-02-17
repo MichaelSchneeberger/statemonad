@@ -99,9 +99,9 @@ Defining the `CollectEvenNumbers` state monad as a class allows for a clean and 
 However, some details of this representation is obscured by the lambda function used with the `flat_map` method.
 
 
-## Do-notation
+<!-- ## Do-notation
 
-Using the donotation library, the monadic sequence above can be rewritten with the do-notation as follows:
+Using the [do-notation](https://github.com/MichaelSchneeberger/do-notation) library, the monadic sequence above can be rewritten with the do-notation as follows:
 
 ``` python
 from donotation import do
@@ -112,14 +112,14 @@ def example(init):
     y = yield from collect_even_numbers(x + 1)
     z = yield from collect_even_numbers(y + 1)
     return collect_even_numbers(z + 1)
-```
+``` -->
 
 ## References
 
-Here are some Python libraries that implement the state monad:
+Here are other Python libraries that implement the state monad, prioritizing correct type hinting over practical usability:
 
 * [https://github.com/dbrattli/OSlash](https://github.com/dbrattli/OSlash/blob/master/oslash/state.py)
-* [https://github.com/dry-python/returns/tree/master](https://github.com/dry-python/returns/tree/master)
+* [https://github.com/dry-python/returns](https://github.com/dry-python/returns)
 * [https://github.com/jasondelaat/pymonad](https://github.com/jasondelaat/pymonad/blob/release/pymonad/state.py)
 
 

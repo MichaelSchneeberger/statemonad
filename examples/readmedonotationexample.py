@@ -13,7 +13,7 @@ state = tuple()
 def collect_even_numbers(num: int):
     if num % 2 == 0:
 
-        @dataclassabc(frozen=True)
+        @dataclassabc(frozen=True, slots=True)
         class CollectEvenNumbers(StateMonadNode[State, int]):
             num: int
 

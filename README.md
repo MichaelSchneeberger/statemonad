@@ -1,12 +1,12 @@
 
 # State-Monad
 
-State-Monad is a Python library that encapsulates stateful computations into a monadic structure.
+State-Monad is a Python library that encapsulates stateful computations - computations that require an explicit state object to execute - within a monadic structure.
 
 ## Features
 
 * Pragmatic Monad: Implements the core concepts of a state monad in a way that is practical and relevant for a Python developpers. It focus on usability rather than strict adherence to mathematical correctness.
-* Object-Orgiented Design: State monad operations are built using Python classes, favoring an object-oriented approach that prioritizes working with objects rather than deeply nested functions.
+* Object-Orgiented Design: State monad operations are built based on Python classes, favoring an object-oriented approach that prioritizes working with objects rather than deeply nested functions.
 * Type hinting: The implemented type hinting ensures that types are correctly inferred by type checkers like [pyright](https://github.com/microsoft/pyright).
 
 ## Installation
@@ -51,7 +51,7 @@ def collect_even_numbers(num: int):
 
     if num % 2 == 0:
 
-        @dataclassabc(frozen=True)
+        @dataclassabc(frozen=True, slots=True)
         class CollectEvenNumbers(StateMonadNode[State, int]):
             num: int
 

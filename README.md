@@ -164,46 +164,9 @@ This feature aids in identifying the root cause of errors more efficiently.
 
 ## References
 
-<!-- Here are other Python libraries that implement the state monad, prioritizing correct type hinting over practical usability: -->
-
-Several state monad implementations exist in \textit{Python}, such as:
+Several state monad implementations exist in Python, such as:
 * [https://github.com/dbrattli/OSlash](https://github.com/dbrattli/OSlash/blob/master/oslash/state.py)
 * [https://github.com/dry-python/returns](https://github.com/dry-python/returns)
 * [https://github.com/jasondelaat/pymonad](https://github.com/jasondelaat/pymonad/blob/release/pymonad/state.py)
 
-However, these implementations tend to be unnecessary complex, as they attempt to directly translate functional programming concepts into \textit{Python} -- a language that only weakly supports types through type hinting.
-
-
-<!-- The following example illustrates how a state object `state` is created and used to compute an object `result`:
-
-
-``` python
-def compute_something(state):
-    state, val1 = operation1(state)
-    state, val2 = operation2(val1, state)
-    state, result = operation2(val1, val2, state)
-    return state, result
-
-# Create state object used in the preceding computations.
-state = init_state()
-
-state, result1 = compute_something(state)
-```
-
-If we recompute the object, we can either use the same state object `state`,
-
-``` python
-# result2 might be different from result1, that is result1 != result3
-state, result2 = compute_something(state)
-```
-
-or, we can create a new state object `state` resulting in the same object `result` as before:
-
-``` python
-# Create the same state object as before
-state = init_state()
-
-# result 1 == result 3
-state, result3 = compute_something(state)
-```
- -->
+However, these implementations tend to be unnecessary complex, as they attempt to directly translate functional programming concepts into Python -- a language that only weakly supports types through type hinting.

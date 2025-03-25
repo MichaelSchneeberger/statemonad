@@ -7,7 +7,7 @@ from statemonad.statemonad.init import init_state_monad
 
 class from_[State]:
     """
-    This function (implemented as function to enable better type hinting) creates a constant state monad.
+    This function (implemented as a class to enable better type hinting) creates a constant state monad.
     It sets the return value to `value` while leaving the state unchanged.
     """
     
@@ -17,8 +17,7 @@ class from_[State]:
 
 class get[State]:
     """
-    This function (implemented as function to enable better type hinting) returns the state while leaving
-    the state unchanged.
+    This function (implemented as a class to enable better type hinting) returns the state while leaving the state unchanged.
     """
         
     def __new__(_) -> StateMonad[State, State]:
